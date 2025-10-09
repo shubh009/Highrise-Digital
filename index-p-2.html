@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Highrise Digital — Landing Page</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a2e0a6b9d8.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      /* Custom color variables */
+      :root {
+        --hrd-deep: #185768; /* deep teal */
+        --hrd-soft: #6ea3ab; /* soft teal */
+        --hrd-emerald: #027051; /* accent/emerald */
+        font-family: Nunito, sans-serif !important;
+      }
+
+      /* small custom utilities */
+      .btn-pill {
+        border-radius: 9999px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+      .card-radius {
+        border-radius: 1rem;
+      }
+
+      /* WhatsApp floating button - desktop only */
+      .hrd-whatsapp {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--hrd-emerald);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(2, 112, 81, 0.18);
+        z-index: 60;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      .hrd-whatsapp:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 30px rgba(2, 112, 81, 0.22);
+      }
+      @media (max-width: 1024px) {
+        .hrd-whatsapp {
+          display: none;
+        }
+      }
+
+      /* Bottom mobile menu - mobile only */
+      .hrd-bottom-menu {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: var(--hrd-deep);
+        color: white;
+        z-index: 55;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        box-shadow: 0 -6px 20px rgba(24, 87, 104, 0.12);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+      @media (min-width: 769px) {
+        .hrd-bottom-menu {
+          display: none;
+        }
+      }
+
+      /* Modal (pop-up) */
+      .hrd-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 70;
+        padding: 1.25rem;
+      }
+      .hrd-modal.active {
+        display: flex;
+      }
+      .hrd-modal-card {
+        width: 100%;
+        max-width: 540px;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      }
+
+      /* Infinite client logo slider (basic) */
+      .logo-strip {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        animation: scrollLeft 18s linear infinite;
+      }
+      .logo-strip:hover {
+        animation-play-state: paused;
+      }
+      @keyframes scrollLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Simple fade-in on scroll helper */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* small accessibility focus ring */
+      .focus-ring:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(2, 112, 81, 0.12);
+        border-radius: 9999px;
+      }
+
+      /* service card overlap hero */
+      .stat-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+      }
+
+      /* FAQ caret rotation */
+      .faq-toggle[aria-expanded="true"] .caret {
+        transform: rotate(180deg);
+      }
+
+      /* small responsive tweaks */
+      @media (min-width: 1024px) {
+        .hero-cta {
+          transform: translateY(0);
+        }
+      }
+
+      /* prevent map iframe from blocking modal close on mobile scroll (touch) */
+      .map-iframe {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800 font-inter">
+    <!-- STICKY HEADER -->
+    <header
+      id="top"
+      class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between p-4 md:p-5 lg:p-6"
+      >
+        <a href="#top" class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-[var(--hrd-deep)] to-[var(--hrd-emerald)] text-white font-bold"
+          >
+            HR
+          </div>
+          <div>
+            <div class="text-sm font-semibold" style="color: var(--hrd-deep)">
+              Highrise Digital
+            </div>
+            <div class="text-xs text-gray-500">Digital Growth Partners</div>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a
+            href="#services"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Services</a
+          >
+          <a
+            href="#impact"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Impact</a
+          >
+          <a
+            href="#about"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >About</a
+          >
+          <a
+            href="#testimonials"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Testimonials</a
+          >
+          <a
+            href="#faq"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >FAQ</a
+          >
+          <button
+            id="ctaHeader"
+            class="ml-4 btn-pill bg-[var(--hrd-emerald)] text-white text-md py-2 px-4 shadow-sm hover:brightness-95 focus-ring font-semibold"
+          >
+            Get a Free Consultation
+          </button>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <div class="md:hidden flex items-center gap-3">
+          <button
+            id="mobileMenuBtn"
+            aria-label="Open menu"
+            class="p-2 rounded-lg focus-ring"
+          >
+            <i class="fas fa-bars text-lg" style="color: var(--hrd-deep)"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu slide down -->
+      <div id="mobileMenu" class="md:hidden bg-white shadow-inner hidden">
+        <div class="px-4 pb-4 space-y-2">
+          <a href="#services" class="block py-2">Services</a>
+          <a href="#impact" class="block py-2">Impact</a>
+          <a href="#about" class="block py-2">About</a>
+          <a href="#testimonials" class="block py-2">Testimonials</a>
+          <a href="#faq" class="block py-2">FAQ</a>
+          <button
+            id="ctaMobileMenu"
+            class="w-full mt-2 bg-[var(--hrd-emerald)] text-white py-2 rounded-full"
+          >
+            Get a Free Consultation
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-20">
+      <!-- HERO -->
+      <section
+        id="home"
+        class="relative min-h-[70vh] bg-[url('https://seox.vikinglab.agency/demo-10/wp-content/uploads/sites/11/2025/07/hero6-bg.jpg')] bg-cover bg-center text-white"
+      >
+        <div
+          class="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28 flex flex-col lg:flex-row items-center gap-10"
+        >
+          <div class="lg:w-1/2 reveal">
+            <h1
+              class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 capitalize"
+            >
+              We bring you new customers
+            </h1>
+            <p class="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
+              We build effective strategies to help you reach customers and
+              prospects across the entire web.
+            </p>
+            <div class="flex gap-3 items-center">
+              <button
+                id="heroCta"
+                class="hero-cta btn-pill bg-white text-[var(--hrd-emerald)] py-3 px-6 font-semibold shadow-lg hover:brightness-95 focus-ring"
+              >
+                Get a Free Consultation
+              </button>
+              <a
+                href="#services"
+                class="btn-pill bg-white/10 border border-white/20 text-white py-3 px-5 hover:bg-white/20"
+                >Our Services</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 px-6 md:px-12 lg:px-24">
+        <div
+          class="flex flex-col md:flex-row text-left border border-gray-200 rounded-full shadow-lg overflow-hidden absolute bottom-[0px] w-full md:w-11/12 lg:w-10/12 mx-auto left-0 right-0 bg-[linear-gradient(90deg,rgba(24,87,104,0.9),rgba(2,112,81,0.95))] p-4 bottom-[45px]"
+        >
+          <div class="logo-strip">
+            <!-- duplicate logos to create seamless loop -->
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-02.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-04.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <!-- repeat -->
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-02.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-04.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+          </div>
+
+          <!-- <div
+            class="flex-1 bg-white p-8 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >01.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">Causes</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              We support education, healthcare, and poverty reduction.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              See Proof <span class="ml-2">→</span>
+            </a>
+          </div>
+
+          
+          <div
+            class="flex-1 bg-white p-8 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >02.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">
+              Get involved
+            </h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Volunteer or donate your skills to make a difference.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              View Financials <span class="ml-2">→</span>
+            </a>
+          </div>
+
+          
+          <div
+            class="flex-1 bg-white p-8 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >03.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">Donation</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Contribute today and help us change lives and build a better
+              future.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              Learn More <span class="ml-2">→</span>
+            </a>
+          </div> -->
+        </div>
+      </section>
+
+      <!-- HIGHLIGHT / SERVICES SECTION -->
+      <section
+        id="services"
+        class="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20"
+      >
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+          <div class="reveal">
+            <h2 class="text-3xl font-bold mb-3" style="color: var(--hrd-deep)">
+              What we do — Services
+            </h2>
+            <p class="text-gray-600 mb-6 max-w-xl">
+              We offer a full stack of digital services from strategy and
+              branding to product design, web development and performance
+              marketing.
+            </p>
+
+            <!-- Services carousel (auto-rotating) -->
+            <div class="relative">
+              <div id="servicesCarousel" class="overflow-hidden">
+                <div
+                  class="flex transition-all duration-500 gap-4"
+                  style="will-change: transform"
+                >
+                  <!-- 1 -->
+                  <div
+                    class="min-w-full lg:min-w-0 lg:w-80 bg-white card-radius p-6 shadow-sm"
+                  >
+                    <div class="flex items-center gap-3 mb-3">
+                      <div
+                        class="w-10 h-10 rounded-lg bg-[var(--hrd-soft)] flex items-center justify-center text-white"
+                      >
+                        <i class="fas fa-paint-brush"></i>
+                      </div>
+                      <h3 class="font-semibold">Brand & Design</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Identity, UI/UX, visual systems & product design
+                    </p>
+                  </div>
+                  <!-- 2 -->
+                  <div
+                    class="min-w-full lg:min-w-0 lg:w-80 bg-white card-radius p-6 shadow-sm"
+                  >
+                    <div class="flex items-center gap-3 mb-3">
+                      <div
+                        class="w-10 h-10 rounded-lg bg-[var(--hrd-soft)] flex items-center justify-center text-white"
+                      >
+                        <i class="fas fa-code"></i>
+                      </div>
+                      <h3 class="font-semibold">Web Development</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Modern static & dynamic sites with performance-first
+                      approach
+                    </p>
+                  </div>
+                  <!-- 3 -->
+                  <div
+                    class="min-w-full lg:min-w-0 lg:w-80 bg-white card-radius p-6 shadow-sm"
+                  >
+                    <div class="flex items-center gap-3 mb-3">
+                      <div
+                        class="w-10 h-10 rounded-lg bg-[var(--hrd-soft)] flex items-center justify-center text-white"
+                      >
+                        <i class="fas fa-bullhorn"></i>
+                      </div>
+                      <h3 class="font-semibold">Growth & Marketing</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Paid acquisition, SEO & content strategy
+                    </p>
+                  </div>
+                  <!-- 4 -->
+                  <div
+                    class="min-w-full lg:min-w-0 lg:w-80 bg-white card-radius p-6 shadow-sm"
+                  >
+                    <div class="flex items-center gap-3 mb-3">
+                      <div
+                        class="w-10 h-10 rounded-lg bg-[var(--hrd-soft)] flex items-center justify-center text-white"
+                      >
+                        <i class="fas fa-mobile-alt"></i>
+                      </div>
+                      <h3 class="font-semibold">Mobile Apps</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Native & cross-platform mobile solutions
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- carousel controls -->
+              <div class="mt-4 flex gap-3 items-center">
+                <button
+                  id="svcPrev"
+                  class="p-2 rounded-full bg-white/90 shadow-sm focus-ring"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <div id="svcDots" class="flex gap-2"></div>
+                <button
+                  id="svcNext"
+                  class="p-2 rounded-full bg-white/90 shadow-sm focus-ring"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Impact / quick stats -->
+          <aside class="bg-white/50 p-6 lg:p-10 rounded-xl reveal">
+            <h3 class="text-xl font-bold mb-4" style="color: var(--hrd-deep)">
+              Our Impact
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 bg-white rounded-lg shadow-sm">
+                <div class="text-2xl font-bold">+120%</div>
+                <div class="text-xs text-gray-500">
+                  Avg. conversion increase
+                </div>
+              </div>
+              <div class="p-4 bg-white rounded-lg shadow-sm">
+                <div class="text-2xl font-bold">500+</div>
+                <div class="text-xs text-gray-500">Projects</div>
+              </div>
+              <div class="p-4 bg-white rounded-lg shadow-sm">
+                <div class="text-2xl font-bold">250+</div>
+                <div class="text-xs text-gray-500">Clients</div>
+              </div>
+              <div class="p-4 bg-white rounded-lg shadow-sm">
+                <div class="text-2xl font-bold">15 yrs</div>
+                <div class="text-xs text-gray-500">Experience</div>
+              </div>
+            </div>
+
+            <div
+              class="mt-6 p-4 rounded-lg"
+              style="
+                background: linear-gradient(
+                  90deg,
+                  var(--hrd-soft),
+                  var(--hrd-emerald)
+                );
+                color: white;
+              "
+            >
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold">Ready to grow?</div>
+                  <div class="text-xs">
+                    Let's build something great together.
+                  </div>
+                </div>
+                <button
+                  id="impactCta"
+                  class="ml-4 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-full"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="bg-gray-50">
+        <div
+          class="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-2 gap-8 items-center"
+        >
+          <div class="reveal">
+            <img
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=5df44d6c2e7a98ff1a1dc0bb9f0f3a79"
+              alt="team"
+              class="rounded-xl shadow-md w-full object-cover h-80"
+            />
+          </div>
+          <div class="reveal">
+            <h2 class="text-3xl font-bold mb-3" style="color: var(--hrd-deep)">
+              About Highrise Digital
+            </h2>
+            <p class="text-gray-600 mb-4">
+              We combine strategy, design and engineering to build digital
+              products and growth systems that drive measurable business
+              results. Our multidisciplinary team focuses on clarity, velocity
+              and sustainable growth.
+            </p>
+            <ul class="space-y-3 text-gray-600">
+              <li>— Product-led design & customer-first UX</li>
+              <li>— Robust engineering & performance focused</li>
+              <li>— Data-driven growth & marketing</li>
+            </ul>
+            <div class="mt-6">
+              <a
+                href="#contact"
+                class="btn-pill bg-[var(--hrd-emerald)] text-white py-2 px-4 shadow-sm"
+                >Work with us</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section
+        id="testimonials"
+        class="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20"
+      >
+        <div class="text-center mb-8 reveal">
+          <h2 class="text-3xl font-bold" style="color: var(--hrd-deep)">
+            What clients say
+          </h2>
+          <p class="text-gray-600 mt-2">
+            Real feedback from teams we've helped scale.
+          </p>
+        </div>
+
+        <div class="relative reveal">
+          <div id="testiCarousel" class="overflow-hidden">
+            <div
+              class="flex transition-transform duration-500 gap-6"
+              style="will-change: transform"
+            >
+              <!-- testimonial 1 -->
+              <article
+                class="min-w-full lg:min-w-0 lg:w-1/3 bg-white p-6 rounded-xl shadow-sm"
+              >
+                <div class="flex items-center gap-4 mb-4">
+                  <img
+                    src="https://i.pravatar.cc/64?img=5"
+                    alt="avatar"
+                    class="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <div class="font-semibold">Aisha Khan</div>
+                    <div class="text-xs text-gray-500">
+                      Head of Growth, ScaleUp
+                    </div>
+                  </div>
+                </div>
+                <p class="text-gray-600">
+                  "Highrise transformed our website and doubled our demo
+                  requests in three months."
+                </p>
+                <div class="mt-4 text-sm text-yellow-500">
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </article>
+
+              <!-- testimonial 2 -->
+              <article
+                class="min-w-full lg:min-w-0 lg:w-1/3 bg-white p-6 rounded-xl shadow-sm"
+              >
+                <div class="flex items-center gap-4 mb-4">
+                  <img
+                    src="https://i.pravatar.cc/64?img=8"
+                    alt="avatar"
+                    class="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <div class="font-semibold">Rohit Mehra</div>
+                    <div class="text-xs text-gray-500">Founder, FintechCo</div>
+                  </div>
+                </div>
+                <p class="text-gray-600">
+                  "A fantastic partner — fast, thorough and pragmatic."
+                </p>
+                <div class="mt-4 text-sm text-yellow-500">
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </article>
+
+              <!-- testimonial 3 -->
+              <article
+                class="min-w-full lg:min-w-0 lg:w-1/3 bg-white p-6 rounded-xl shadow-sm"
+              >
+                <div class="flex items-center gap-4 mb-4">
+                  <img
+                    src="https://i.pravatar.cc/64?img=12"
+                    alt="avatar"
+                    class="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <div class="font-semibold">Priya Das</div>
+                    <div class="text-xs text-gray-500">
+                      Product Lead, RetailX
+                    </div>
+                  </div>
+                </div>
+                <p class="text-gray-600">
+                  "The team's product thinking and execution helped us ship
+                  month after month."
+                </p>
+                <div class="mt-4 text-sm text-yellow-500">
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div class="mt-6 flex justify-center gap-3">
+            <button
+              id="tPrev"
+              class="p-2 rounded-full bg-white/90 shadow-sm focus-ring"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="tDots" class="flex gap-2"></div>
+            <button
+              id="tNext"
+              class="p-2 rounded-full bg-white/90 shadow-sm focus-ring"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLIENT LOGOS (infinite scroll) -->
+      <section class="bg-white py-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+          <div class="mb-4 text-center text-sm text-gray-500">Trusted by</div>
+          <div class="overflow-hidden">
+            <div class="logo-strip">
+              <!-- duplicate logos to create seamless loop -->
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+1"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+2"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+3"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+4"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+5"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <!-- repeat -->
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+1"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+2"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+3"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+4"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+              <img
+                src="https://via.placeholder.com/120x40?text=Brand+5"
+                alt="brand"
+                class="h-10 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FULL WIDTH -->
+      <section
+        class="py-12"
+        style="
+          background: linear-gradient(
+            90deg,
+            var(--hrd-deep),
+            var(--hrd-emerald)
+          );
+        "
+      >
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+          <div
+            class="rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white"
+          >
+            <div>
+              <h3 class="text-2xl font-bold">
+                Ready to launch your next digital product?
+              </h3>
+              <p class="text-sm text-white/90">
+                Talk to our experts and get a strategy tailored to your
+                business.
+              </p>
+            </div>
+            <div class="flex gap-3">
+              <button
+                id="ctaBanner"
+                class="btn-pill bg-white text-[var(--hrd-emerald)] py-2 px-4 font-semibold"
+              >
+                Book a Call
+              </button>
+              <a
+                href="#contact"
+                class="btn-pill border border-white/30 text-white py-2 px-4"
+                >Learn more</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div class="reveal">
+            <h2 class="text-3xl font-bold mb-3" style="color: var(--hrd-deep)">
+              Frequently asked questions
+            </h2>
+            <p class="text-gray-600 mb-6">
+              Common questions about our process and working together.
+            </p>
+
+            <div class="space-y-3">
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <button
+                  class="w-full flex items-center justify-between text-left faq-toggle"
+                  aria-expanded="false"
+                >
+                  <span>How long does a typical project take?</span>
+                  <i class="fas fa-chevron-down caret"></i>
+                </button>
+                <div class="faq-panel mt-3 hidden text-gray-600">
+                  Typical projects take 6–12 weeks depending on scope —
+                  discovery, design, development and launch phases.
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <button
+                  class="w-full flex items-center justify-between text-left faq-toggle"
+                  aria-expanded="false"
+                >
+                  <span>Do you provide ongoing support?</span>
+                  <i class="fas fa-chevron-down caret"></i>
+                </button>
+                <div class="faq-panel mt-3 hidden text-gray-600">
+                  Yes. We offer maintenance & growth retainers for product
+                  updates and performance improvements.
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <button
+                  class="w-full flex items-center justify-between text-left faq-toggle"
+                  aria-expanded="false"
+                >
+                  <span>What industries do you work with?</span>
+                  <i class="fas fa-chevron-down caret"></i>
+                </button>
+                <div class="faq-panel mt-3 hidden text-gray-600">
+                  We work across fintech, SaaS, retail, healthcare and more —
+                  the core is product-market fit and clarity.
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <button
+                  class="w-full flex items-center justify-between text-left faq-toggle"
+                  aria-expanded="false"
+                >
+                  <span>How do we get started?</span>
+                  <i class="fas fa-chevron-down caret"></i>
+                </button>
+                <div class="faq-panel mt-3 hidden text-gray-600">
+                  Start with a discovery call — we'll scope your needs and
+                  propose a roadmap.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- contact + map side-by-side -->
+            <div id="contact" class="bg-white p-6 rounded-xl shadow-sm reveal">
+              <h3
+                class="text-xl font-semibold mb-3"
+                style="color: var(--hrd-deep)"
+              >
+                Contact us
+              </h3>
+              <p class="text-sm text-gray-600 mb-4">
+                Send a message or book a call and we'll get back within 1
+                business day.
+              </p>
+
+              <form id="mainContactForm" class="space-y-3" novalidate>
+                <div>
+                  <label class="text-sm font-medium">Full name</label>
+                  <input
+                    id="mc_name"
+                    class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium">Email</label>
+                  <input
+                    id="mc_email"
+                    type="email"
+                    class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium">Message</label>
+                  <textarea
+                    id="mc_message"
+                    rows="3"
+                    class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+                  ></textarea>
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    type="submit"
+                    class="btn-pill bg-[var(--hrd-emerald)] text-white py-2 px-4"
+                  >
+                    Send message
+                  </button>
+                  <button
+                    type="button"
+                    id="clearContact"
+                    class="btn-pill border border-gray-200 text-gray-700 py-2 px-4"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="mt-4 rounded-xl overflow-hidden shadow-sm reveal">
+              <!-- Google Maps iframe (replace src with your own location) -->
+              <iframe
+                class="map-iframe w-full h-56"
+                loading="lazy"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019982807019!2d144.96305831567236!3d-37.81627944202156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d452f7c7a0b%3A0x5045675218ce240!2sMelbourne%20VIC!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="bg-white border-t mt-8">
+        <div
+          class="max-w-7xl mx-auto px-6 lg:px-8 py-10 grid md:grid-cols-3 gap-8"
+        >
+          <div>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-[var(--hrd-deep)] to-[var(--hrd-emerald)] text-white font-bold"
+              >
+                HR
+              </div>
+              <div>
+                <div class="font-semibold" style="color: var(--hrd-deep)">
+                  Highrise Digital
+                </div>
+                <div class="text-xs text-gray-500">Design · Dev · Growth</div>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              We build digital products and growth systems for ambitious brands.
+            </p>
+          </div>
+
+          <div class="text-sm text-gray-700">
+            <div class="font-semibold mb-2">Services</div>
+            <ul class="space-y-1">
+              <li>
+                <a
+                  href="#services"
+                  class="text-gray-600 hover:text-[var(--hrd-emerald)]"
+                  >Brand & Design</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  class="text-gray-600 hover:text-[var(--hrd-emerald)]"
+                  >Web Development</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  class="text-gray-600 hover:text-[var(--hrd-emerald)]"
+                  >Growth & Marketing</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-sm text-gray-700">
+            <div class="font-semibold mb-2">Contact</div>
+            <div class="text-gray-600">hello@highrisedigital.example</div>
+            <div class="text-gray-600 mt-2">+91 12345 67890</div>
+            <div class="flex gap-3 mt-3">
+              <a class="p-2 rounded-md bg-[var(--hrd-soft)] text-white" href="#"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a class="p-2 rounded-md bg-[var(--hrd-soft)] text-white" href="#"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a class="p-2 rounded-md bg-[var(--hrd-soft)] text-white" href="#"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 py-4">
+          <div
+            class="max-w-7xl mx-auto px-6 lg:px-8 text-sm text-gray-500 flex items-center justify-between"
+          >
+            <div>
+              © <span id="year"></span> Highrise Digital. All rights reserved.
+            </div>
+            <div>Terms • Privacy</div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- WHATSAPP STICKY BUTTON (Desktop only) -->
+    <a
+      class="hrd-whatsapp focus-ring"
+      href="https://wa.me/919999999999?text=Hi%20Highrise%20Digital!%20I%27m%20interested%20in%20your%20services"
+      target="_blank"
+      aria-label="Chat on WhatsApp"
+      title="Chat on WhatsApp"
+    >
+      <i class="fab fa-whatsapp fa-lg"></i>
+    </a>
+
+    <!-- BOTTOM MOBILE MENU -->
+    <nav class="hrd-bottom-menu">
+      <button
+        onclick="scrollTo('#home')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-home text-lg"></i><span>Home</span>
+      </button>
+      <button
+        onclick="scrollTo('#services')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-cogs text-lg"></i><span>Services</span>
+      </button>
+      <button
+        onclick="scrollTo('#about')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-info-circle text-lg"></i><span>About</span>
+      </button>
+      <button id="mobileContact" class="flex flex-col items-center text-xs">
+        <i class="fas fa-envelope text-lg"></i><span>Contact</span>
+      </button>
+    </nav>
+
+    <!-- POP-UP MODAL (CTA form) -->
+    <div
+      id="modal"
+      class="hrd-modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="hrd-modal-card">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold" style="color: var(--hrd-deep)">
+              Request a free consultation
+            </h3>
+            <p class="text-sm text-gray-600">
+              Share a few details and we'll reach out within one business day.
+            </p>
+          </div>
+          <button
+            id="modalClose"
+            aria-label="Close modal"
+            class="text-gray-500 hover:text-gray-700 ml-4"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <form id="modalForm" class="mt-4 space-y-3" novalidate>
+          <div>
+            <label class="text-sm font-medium">Full name</label>
+            <input
+              id="m_name"
+              type="text"
+              required
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input
+              id="m_email"
+              type="email"
+              required
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Phone</label>
+            <input
+              id="m_phone"
+              type="tel"
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Message</label>
+            <textarea
+              id="m_message"
+              rows="3"
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            ></textarea>
+          </div>
+          <div class="flex gap-2">
+            <button
+              type="submit"
+              class="btn-pill bg-[var(--hrd-emerald)] text-white py-2 px-4"
+            >
+              Send request
+            </button>
+            <button
+              type="button"
+              id="modalCancel"
+              class="btn-pill border border-gray-200 py-2 px-4"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div
+      id="toast"
+      class="fixed right-6 bottom-6 bg-[var(--hrd-deep)] text-white px-4 py-2 rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity z-80"
+    >
+      <div id="toastMessage" class="text-sm"></div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+      // Utilities
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      mobileMenuBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        mobileMenuBtn.setAttribute(
+          "aria-expanded",
+          !mobileMenu.classList.contains("hidden")
+        );
+      });
+
+      // Smooth scroll helper
+      function scrollTo(selector) {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+
+      // Header CTA hooks open modal
+      const heroCta = document.getElementById("heroCta");
+      const ctaHeader = document.getElementById("ctaHeader");
+      const ctaMobileMenu = document.getElementById("ctaMobileMenu");
+      const ctaBanner = document.getElementById("ctaBanner");
+      const impactCta = document.getElementById("impactCta");
+      const modal = document.getElementById("modal");
+
+      const openModal = () => {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+        // focus first input
+        setTimeout(() => document.getElementById("m_name").focus(), 180);
+      };
+      const closeModal = () => {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      };
+
+      [heroCta, ctaHeader, ctaMobileMenu, ctaBanner, impactCta].forEach(
+        (btn) => {
+          if (btn)
+            btn.addEventListener("click", (e) => {
+              e.preventDefault();
+              openModal();
+            });
+        }
+      );
+
+      document
+        .getElementById("modalClose")
+        ?.addEventListener("click", closeModal);
+      document
+        .getElementById("modalCancel")
+        ?.addEventListener("click", closeModal);
+      modal?.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Accessible ESC key close
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Modal form submission (client-side only)
+      const modalForm = document.getElementById("modalForm");
+      modalForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Basic validation
+        const name = document.getElementById("m_name").value.trim();
+        const email = document.getElementById("m_email").value.trim();
+        if (!name || !email) {
+          showToast("Please enter your name and email.");
+          return;
+        }
+
+        // TODO: replace with backend API or EmailJS call
+        // Example: send payload to your server
+        const payload = {
+          name,
+          email,
+          phone: document.getElementById("m_phone").value.trim(),
+          message: document.getElementById("m_message").value.trim(),
+        };
+        console.log("Form submit payload:", payload);
+
+        // show success toast
+        showToast(
+          "Thanks — we received your request. We will contact you soon."
+        );
+        modalForm.reset();
+        closeModal();
+      });
+
+      // Main contact form handler
+      const mainContactForm = document.getElementById("mainContactForm");
+      mainContactForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const n = document.getElementById("mc_name").value.trim();
+        const em = document.getElementById("mc_email").value.trim();
+        if (!n || !em) {
+          showToast("Please complete name and email.");
+          return;
+        }
+        // TODO: send to backend
+        showToast("Message sent — thank you!");
+        mainContactForm.reset();
+      });
+      document
+        .getElementById("clearContact")
+        ?.addEventListener("click", () => mainContactForm.reset());
+
+      // mobile bottom menu contact open modal
+      document
+        .getElementById("mobileContact")
+        ?.addEventListener("click", openModal);
+      document
+        .getElementById("contactBtnMobile")
+        ?.addEventListener("click", openModal); // if present earlier
+
+      // Toast helper
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMessage");
+      let toastTimer = null;
+      function showToast(msg, ms = 3500) {
+        if (!toast) return;
+        toastMsg.textContent = msg;
+        toast.style.opacity = 1;
+        toast.style.pointerEvents = "auto";
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.style.opacity = 0;
+          toast.style.pointerEvents = "none";
+        }, ms);
+      }
+
+      // Intersection observer for reveal animations
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.12 }
+      );
+      revealEls.forEach((el) => io.observe(el));
+
+      /******** Services Carousel (auto-rotate) ********/
+      (function () {
+        const carousel = document.querySelector("#servicesCarousel > div");
+        if (!carousel) return;
+        const slides = Array.from(carousel.children);
+        let index = 0;
+        const total = slides.length;
+        const dotsContainer = document.getElementById("svcDots");
+
+        // create dots
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement("button");
+          dot.className = "w-2 h-2 rounded-full bg-gray-300";
+          dot.style.opacity = i === 0 ? "1" : "0.5";
+          dot.addEventListener("click", () => {
+            index = i;
+            update();
+            resetTimer();
+          });
+          dotsContainer.appendChild(dot);
+        }
+
+        function update() {
+          // if viewport large, show multi cards (we'll simply translate by index)
+          const width = carousel.clientWidth;
+          const translateX = -index * width;
+          carousel.style.transform = `translateX(${translateX}px)`;
+          // update dots
+          Array.from(dotsContainer.children).forEach(
+            (d, i) => (d.style.opacity = i === index ? "1" : "0.5")
+          );
+        }
+
+        document.getElementById("svcPrev")?.addEventListener("click", () => {
+          index = (index - 1 + total) % total;
+          update();
+          resetTimer();
+        });
+        document.getElementById("svcNext")?.addEventListener("click", () => {
+          index = (index + 1) % total;
+          update();
+          resetTimer();
+        });
+
+        // auto-rotate
+        let timer = setInterval(() => {
+          index = (index + 1) % total;
+          update();
+        }, 5000);
+        function resetTimer() {
+          clearInterval(timer);
+          timer = setInterval(() => {
+            index = (index + 1) % total;
+            update();
+          }, 5000);
+        }
+
+        // on resize, update transform
+        window.addEventListener("resize", update);
+        // initial
+        update();
+      })();
+
+      /******** Testimonials carousel (auto-rotate) ********/
+      (function () {
+        const carousel = document.querySelector("#testiCarousel > div");
+        if (!carousel) return;
+        const slides = Array.from(carousel.children);
+        let index = 0;
+        const total = slides.length;
+        const dots = document.getElementById("tDots");
+
+        // create dots
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement("button");
+          dot.className = "w-2 h-2 rounded-full bg-gray-300";
+          dot.style.opacity = i === 0 ? "1" : "0.5";
+          dot.addEventListener("click", () => {
+            index = i;
+            update();
+            resetTimer();
+          });
+          dots.appendChild(dot);
+        }
+
+        function update() {
+          const width = carousel.clientWidth;
+          const translateX = -index * width;
+          carousel.style.transform = `translateX(${translateX}px)`;
+          Array.from(dots.children).forEach(
+            (d, i) => (d.style.opacity = i === index ? "1" : "0.5")
+          );
+        }
+
+        document.getElementById("tPrev")?.addEventListener("click", () => {
+          index = (index - 1 + total) % total;
+          update();
+          resetTimer();
+        });
+        document.getElementById("tNext")?.addEventListener("click", () => {
+          index = (index + 1) % total;
+          update();
+          resetTimer();
+        });
+
+        let tTimer = setInterval(() => {
+          index = (index + 1) % total;
+          update();
+        }, 6000);
+        function resetTimer() {
+          clearInterval(tTimer);
+          tTimer = setInterval(() => {
+            index = (index + 1) % total;
+            update();
+          }, 6000);
+        }
+        window.addEventListener("resize", update);
+        update();
+      })();
+
+      // FAQ accordion
+      document.querySelectorAll(".faq-toggle").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const expanded = btn.getAttribute("aria-expanded") === "true";
+          // close all siblings
+          document.querySelectorAll(".faq-toggle").forEach((b) => {
+            b.setAttribute("aria-expanded", "false");
+            const panel = b.parentElement.querySelector(".faq-panel");
+            if (panel) {
+              panel.classList.add("hidden");
+            }
+          });
+
+          // toggle clicked
+          if (!expanded) {
+            btn.setAttribute("aria-expanded", "true");
+            const panel = btn.parentElement.querySelector(".faq-panel");
+            if (panel) panel.classList.remove("hidden");
+          } else {
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+
+      // small helper to ensure header items hide mobile menu on navigation
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", () => {
+          if (!mobileMenu.classList.contains("hidden"))
+            mobileMenu.classList.add("hidden");
+        });
+      });
+
+      // Simple accessibility: trap focus inside modal while open
+      (function () {
+        const focusableSelectors =
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+        let lastFocused = null;
+        modal.addEventListener("transitionend", () => {});
+        document.addEventListener("focusin", (e) => {
+          if (modal.classList.contains("active") && !modal.contains(e.target)) {
+            e.stopPropagation();
+            modal.querySelector(focusableSelectors)?.focus();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

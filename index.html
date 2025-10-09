@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Highrise Digital — Landing Page</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a2e0a6b9d8.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      /* Custom color variables */
+      :root {
+        --hrd-deep: #185768; /* deep teal */
+        --hrd-soft: #6ea3ab; /* soft teal */
+        --hrd-emerald: #027051; /* accent/emerald */
+        font-family: Nunito, sans-serif !important;
+      }
+
+      /* small custom utilities */
+      .btn-pill {
+        border-radius: 9999px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+      .card-radius {
+        border-radius: 1rem;
+      }
+
+      /* WhatsApp floating button - desktop only */
+      .hrd-whatsapp {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--hrd-emerald);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(2, 112, 81, 0.18);
+        z-index: 60;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      .hrd-whatsapp:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 30px rgba(2, 112, 81, 0.22);
+      }
+      @media (max-width: 1024px) {
+        .hrd-whatsapp {
+          display: none;
+        }
+      }
+
+      /* Bottom mobile menu - mobile only */
+      .hrd-bottom-menu {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: var(--hrd-deep);
+        color: white;
+        z-index: 55;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        box-shadow: 0 -6px 20px rgba(24, 87, 104, 0.12);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+      @media (min-width: 769px) {
+        .hrd-bottom-menu {
+          display: none;
+        }
+      }
+
+      /* Modal (pop-up) */
+      .hrd-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 70;
+        padding: 1.25rem;
+      }
+      .hrd-modal.active {
+        display: flex;
+      }
+      .hrd-modal-card {
+        width: 100%;
+        max-width: 540px;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      }
+
+      /* Infinite client logo slider (basic) */
+      .logo-strip {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        animation: scrollLeft 18s linear infinite;
+      }
+      .logo-strip:hover {
+        animation-play-state: paused;
+      }
+      @keyframes scrollLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Simple fade-in on scroll helper */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* small accessibility focus ring */
+      .focus-ring:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(2, 112, 81, 0.12);
+        border-radius: 9999px;
+      }
+
+      /* service card overlap hero */
+      .stat-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+      }
+
+      /* FAQ caret rotation */
+      .faq-toggle[aria-expanded="true"] .caret {
+        transform: rotate(180deg);
+      }
+
+      /* small responsive tweaks */
+      @media (min-width: 1024px) {
+        .hero-cta {
+          transform: translateY(0);
+        }
+      }
+
+      /* prevent map iframe from blocking modal close on mobile scroll (touch) */
+      .map-iframe {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800 font-inter">
+    <!-- STICKY HEADER -->
+    <header
+      id="top"
+      class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between p-4 md:p-5 lg:p-6"
+      >
+        <a href="#top" class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-[var(--hrd-deep)] to-[var(--hrd-emerald)] text-white font-bold"
+          >
+            HR
+          </div>
+          <div>
+            <div class="text-sm font-semibold" style="color: var(--hrd-deep)">
+              Highrise Digital
+            </div>
+            <div class="text-xs text-gray-500">Digital Growth Partners</div>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a
+            href="#services"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Services</a
+          >
+          <a
+            href="#impact"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Impact</a
+          >
+          <a
+            href="#about"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >About</a
+          >
+          <a
+            href="#testimonials"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >Testimonials</a
+          >
+          <a
+            href="#faq"
+            class="text-md font-semibold hover:text-[var(--hrd-emerald)] transition"
+            >FAQ</a
+          >
+          <button
+            id="ctaHeader"
+            class="ml-4 btn-pill bg-[var(--hrd-emerald)] text-white text-md py-2 px-4 shadow-sm hover:brightness-95 focus-ring font-semibold"
+          >
+            Get a Free Consultation
+          </button>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <div class="md:hidden flex items-center gap-3">
+          <button
+            id="mobileMenuBtn"
+            aria-label="Open menu"
+            class="p-2 rounded-lg focus-ring"
+          >
+            <i class="fas fa-bars text-lg" style="color: var(--hrd-deep)"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu slide down -->
+      <div id="mobileMenu" class="md:hidden bg-white shadow-inner hidden">
+        <div class="px-4 pb-4 space-y-2">
+          <a href="#services" class="block py-2">Services</a>
+          <a href="#impact" class="block py-2">Impact</a>
+          <a href="#about" class="block py-2">About</a>
+          <a href="#testimonials" class="block py-2">Testimonials</a>
+          <a href="#faq" class="block py-2">FAQ</a>
+          <button
+            id="ctaMobileMenu"
+            class="w-full mt-2 bg-[var(--hrd-emerald)] text-white py-2 rounded-full"
+          >
+            Get a Free Consultation
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-20">
+      <!-- HERO -->
+      <section
+        id="home"
+        class="relative min-h-[70vh] bg-[url('https://seox.vikinglab.agency/demo-10/wp-content/uploads/sites/11/2025/07/hero6-bg.jpg')] bg-cover bg-center text-white"
+      >
+        <div
+          class="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28 flex flex-col lg:flex-row items-center gap-10"
+        >
+          <div class="lg:w-1/2 reveal">
+            <h1
+              class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 capitalize"
+            >
+              We bring you new customers
+            </h1>
+            <p class="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
+              We build effective strategies to help you reach customers and
+              prospects across the entire web.
+            </p>
+            <div class="flex gap-3 items-center">
+              <button
+                id="heroCta"
+                class="hero-cta btn-pill bg-white text-[var(--hrd-emerald)] py-3 px-6 font-semibold shadow-lg hover:brightness-95 focus-ring"
+              >
+                Get a Free Consultation
+              </button>
+              <a
+                href="#services"
+                class="btn-pill bg-white/10 border border-white/20 text-white py-3 px-5 hover:bg-white/20"
+                >Our Services</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 px-6 md:px-12 lg:px-24">
+        <div
+          class="flex flex-col md:flex-row text-left border border-gray-200 rounded-full shadow-lg overflow-hidden absolute bottom-[0px] w-full md:w-11/12 lg:w-10/12 mx-auto left-0 right-0 bg-[linear-gradient(90deg,rgba(24,87,104,0.9),rgba(2,112,81,0.95))] p-4 bottom-[125px]"
+        >
+          <div class="logo-strip">
+            <!-- duplicate logos to create seamless loop -->
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-02.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-04.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <!-- repeat -->
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-02.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-04.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-05.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-06.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+            <img
+              src="https://websitedemos.net/non-profit-organization-04/wp-content/uploads/sites/1476/2023/06/logo-01.svg"
+              alt="brand"
+              class="h-10 object-contain bg-white border rounded-md"
+            />
+          </div>
+
+          <!-- <div
+            class="flex-1 bg-white p-8 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >01.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">Causes</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              We support education, healthcare, and poverty reduction.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              See Proof <span class="ml-2">→</span>
+            </a>
+          </div>
+
+          
+          <div
+            class="flex-1 bg-white p-8 border-b md:border-b-0 md:border-r border-gray-200 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >02.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">
+              Get involved
+            </h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Volunteer or donate your skills to make a difference.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              View Financials <span class="ml-2">→</span>
+            </a>
+          </div>
+
+          
+          <div
+            class="flex-1 bg-white p-8 hover:bg-[#f9fdfa] transition-all duration-300"
+          >
+            <span class="text-[#6ea3ab] text-2xl font-bold block mb-2"
+              >03.</span
+            >
+            <h3 class="text-[#185768] text-xl font-semibold mb-3">Donation</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Contribute today and help us change lives and build a better
+              future.
+            </p>
+            <a
+              href="#"
+              class="text-[#027051] font-semibold hover:underline inline-flex items-center"
+            >
+              Learn More <span class="ml-2">→</span>
+            </a>
+          </div> -->
+        </div>
+      </section>
+    </main>
+
+    <!-- WHATSAPP STICKY BUTTON (Desktop only) -->
+    <a
+      class="hrd-whatsapp focus-ring"
+      href="https://wa.me/919999999999?text=Hi%20Highrise%20Digital!%20I%27m%20interested%20in%20your%20services"
+      target="_blank"
+      aria-label="Chat on WhatsApp"
+      title="Chat on WhatsApp"
+    >
+      <i class="fab fa-whatsapp fa-lg"></i>
+    </a>
+
+    <!-- BOTTOM MOBILE MENU -->
+    <nav class="hrd-bottom-menu">
+      <button
+        onclick="scrollTo('#home')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-home text-lg"></i><span>Home</span>
+      </button>
+      <button
+        onclick="scrollTo('#services')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-cogs text-lg"></i><span>Services</span>
+      </button>
+      <button
+        onclick="scrollTo('#about')"
+        class="flex flex-col items-center text-xs"
+      >
+        <i class="fas fa-info-circle text-lg"></i><span>About</span>
+      </button>
+      <button id="mobileContact" class="flex flex-col items-center text-xs">
+        <i class="fas fa-envelope text-lg"></i><span>Contact</span>
+      </button>
+    </nav>
+
+    <!-- POP-UP MODAL (CTA form) -->
+    <div
+      id="modal"
+      class="hrd-modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="hrd-modal-card">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold" style="color: var(--hrd-deep)">
+              Request a free consultation
+            </h3>
+            <p class="text-sm text-gray-600">
+              Share a few details and we'll reach out within one business day.
+            </p>
+          </div>
+          <button
+            id="modalClose"
+            aria-label="Close modal"
+            class="text-gray-500 hover:text-gray-700 ml-4"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <form id="modalForm" class="mt-4 space-y-3" novalidate>
+          <div>
+            <label class="text-sm font-medium">Full name</label>
+            <input
+              id="m_name"
+              type="text"
+              required
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input
+              id="m_email"
+              type="email"
+              required
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Phone</label>
+            <input
+              id="m_phone"
+              type="tel"
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Message</label>
+            <textarea
+              id="m_message"
+              rows="3"
+              class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[var(--hrd-emerald)]"
+            ></textarea>
+          </div>
+          <div class="flex gap-2">
+            <button
+              type="submit"
+              class="btn-pill bg-[var(--hrd-emerald)] text-white py-2 px-4"
+            >
+              Send request
+            </button>
+            <button
+              type="button"
+              id="modalCancel"
+              class="btn-pill border border-gray-200 py-2 px-4"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div
+      id="toast"
+      class="fixed right-6 bottom-6 bg-[var(--hrd-deep)] text-white px-4 py-2 rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity z-80"
+    >
+      <div id="toastMessage" class="text-sm"></div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+      // Utilities
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      mobileMenuBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        mobileMenuBtn.setAttribute(
+          "aria-expanded",
+          !mobileMenu.classList.contains("hidden")
+        );
+      });
+
+      // Smooth scroll helper
+      function scrollTo(selector) {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+
+      // Header CTA hooks open modal
+      const heroCta = document.getElementById("heroCta");
+      const ctaHeader = document.getElementById("ctaHeader");
+      const ctaMobileMenu = document.getElementById("ctaMobileMenu");
+      const ctaBanner = document.getElementById("ctaBanner");
+      const impactCta = document.getElementById("impactCta");
+      const modal = document.getElementById("modal");
+
+      const openModal = () => {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+        // focus first input
+        setTimeout(() => document.getElementById("m_name").focus(), 180);
+      };
+      const closeModal = () => {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      };
+
+      [heroCta, ctaHeader, ctaMobileMenu, ctaBanner, impactCta].forEach(
+        (btn) => {
+          if (btn)
+            btn.addEventListener("click", (e) => {
+              e.preventDefault();
+              openModal();
+            });
+        }
+      );
+
+      document
+        .getElementById("modalClose")
+        ?.addEventListener("click", closeModal);
+      document
+        .getElementById("modalCancel")
+        ?.addEventListener("click", closeModal);
+      modal?.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Accessible ESC key close
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Modal form submission (client-side only)
+      const modalForm = document.getElementById("modalForm");
+      modalForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Basic validation
+        const name = document.getElementById("m_name").value.trim();
+        const email = document.getElementById("m_email").value.trim();
+        if (!name || !email) {
+          showToast("Please enter your name and email.");
+          return;
+        }
+
+        // TODO: replace with backend API or EmailJS call
+        // Example: send payload to your server
+        const payload = {
+          name,
+          email,
+          phone: document.getElementById("m_phone").value.trim(),
+          message: document.getElementById("m_message").value.trim(),
+        };
+        console.log("Form submit payload:", payload);
+
+        // show success toast
+        showToast(
+          "Thanks — we received your request. We will contact you soon."
+        );
+        modalForm.reset();
+        closeModal();
+      });
+
+      // Main contact form handler
+      const mainContactForm = document.getElementById("mainContactForm");
+      mainContactForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const n = document.getElementById("mc_name").value.trim();
+        const em = document.getElementById("mc_email").value.trim();
+        if (!n || !em) {
+          showToast("Please complete name and email.");
+          return;
+        }
+        // TODO: send to backend
+        showToast("Message sent — thank you!");
+        mainContactForm.reset();
+      });
+      document
+        .getElementById("clearContact")
+        ?.addEventListener("click", () => mainContactForm.reset());
+
+      // mobile bottom menu contact open modal
+      document
+        .getElementById("mobileContact")
+        ?.addEventListener("click", openModal);
+      document
+        .getElementById("contactBtnMobile")
+        ?.addEventListener("click", openModal); // if present earlier
+
+      // Toast helper
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMessage");
+      let toastTimer = null;
+      function showToast(msg, ms = 3500) {
+        if (!toast) return;
+        toastMsg.textContent = msg;
+        toast.style.opacity = 1;
+        toast.style.pointerEvents = "auto";
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.style.opacity = 0;
+          toast.style.pointerEvents = "none";
+        }, ms);
+      }
+
+      // Intersection observer for reveal animations
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.12 }
+      );
+      revealEls.forEach((el) => io.observe(el));
+
+      /******** Services Carousel (auto-rotate) ********/
+      (function () {
+        const carousel = document.querySelector("#servicesCarousel > div");
+        if (!carousel) return;
+        const slides = Array.from(carousel.children);
+        let index = 0;
+        const total = slides.length;
+        const dotsContainer = document.getElementById("svcDots");
+
+        // create dots
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement("button");
+          dot.className = "w-2 h-2 rounded-full bg-gray-300";
+          dot.style.opacity = i === 0 ? "1" : "0.5";
+          dot.addEventListener("click", () => {
+            index = i;
+            update();
+            resetTimer();
+          });
+          dotsContainer.appendChild(dot);
+        }
+
+        function update() {
+          // if viewport large, show multi cards (we'll simply translate by index)
+          const width = carousel.clientWidth;
+          const translateX = -index * width;
+          carousel.style.transform = `translateX(${translateX}px)`;
+          // update dots
+          Array.from(dotsContainer.children).forEach(
+            (d, i) => (d.style.opacity = i === index ? "1" : "0.5")
+          );
+        }
+
+        document.getElementById("svcPrev")?.addEventListener("click", () => {
+          index = (index - 1 + total) % total;
+          update();
+          resetTimer();
+        });
+        document.getElementById("svcNext")?.addEventListener("click", () => {
+          index = (index + 1) % total;
+          update();
+          resetTimer();
+        });
+
+        // auto-rotate
+        let timer = setInterval(() => {
+          index = (index + 1) % total;
+          update();
+        }, 5000);
+        function resetTimer() {
+          clearInterval(timer);
+          timer = setInterval(() => {
+            index = (index + 1) % total;
+            update();
+          }, 5000);
+        }
+
+        // on resize, update transform
+        window.addEventListener("resize", update);
+        // initial
+        update();
+      })();
+
+      /******** Testimonials carousel (auto-rotate) ********/
+      (function () {
+        const carousel = document.querySelector("#testiCarousel > div");
+        if (!carousel) return;
+        const slides = Array.from(carousel.children);
+        let index = 0;
+        const total = slides.length;
+        const dots = document.getElementById("tDots");
+
+        // create dots
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement("button");
+          dot.className = "w-2 h-2 rounded-full bg-gray-300";
+          dot.style.opacity = i === 0 ? "1" : "0.5";
+          dot.addEventListener("click", () => {
+            index = i;
+            update();
+            resetTimer();
+          });
+          dots.appendChild(dot);
+        }
+
+        function update() {
+          const width = carousel.clientWidth;
+          const translateX = -index * width;
+          carousel.style.transform = `translateX(${translateX}px)`;
+          Array.from(dots.children).forEach(
+            (d, i) => (d.style.opacity = i === index ? "1" : "0.5")
+          );
+        }
+
+        document.getElementById("tPrev")?.addEventListener("click", () => {
+          index = (index - 1 + total) % total;
+          update();
+          resetTimer();
+        });
+        document.getElementById("tNext")?.addEventListener("click", () => {
+          index = (index + 1) % total;
+          update();
+          resetTimer();
+        });
+
+        let tTimer = setInterval(() => {
+          index = (index + 1) % total;
+          update();
+        }, 6000);
+        function resetTimer() {
+          clearInterval(tTimer);
+          tTimer = setInterval(() => {
+            index = (index + 1) % total;
+            update();
+          }, 6000);
+        }
+        window.addEventListener("resize", update);
+        update();
+      })();
+
+      // FAQ accordion
+      document.querySelectorAll(".faq-toggle").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const expanded = btn.getAttribute("aria-expanded") === "true";
+          // close all siblings
+          document.querySelectorAll(".faq-toggle").forEach((b) => {
+            b.setAttribute("aria-expanded", "false");
+            const panel = b.parentElement.querySelector(".faq-panel");
+            if (panel) {
+              panel.classList.add("hidden");
+            }
+          });
+
+          // toggle clicked
+          if (!expanded) {
+            btn.setAttribute("aria-expanded", "true");
+            const panel = btn.parentElement.querySelector(".faq-panel");
+            if (panel) panel.classList.remove("hidden");
+          } else {
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+
+      // small helper to ensure header items hide mobile menu on navigation
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", () => {
+          if (!mobileMenu.classList.contains("hidden"))
+            mobileMenu.classList.add("hidden");
+        });
+      });
+
+      // Simple accessibility: trap focus inside modal while open
+      (function () {
+        const focusableSelectors =
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+        let lastFocused = null;
+        modal.addEventListener("transitionend", () => {});
+        document.addEventListener("focusin", (e) => {
+          if (modal.classList.contains("active") && !modal.contains(e.target)) {
+            e.stopPropagation();
+            modal.querySelector(focusableSelectors)?.focus();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
